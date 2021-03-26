@@ -4,7 +4,7 @@ This project **is not abandonned**.
 
 [![](https://jitpack.io/v/lewik/kxml.svg)](https://jitpack.io/#lewik/kxml)
 
-Kxml is simple xml parser.
+Kxml is a simple XML parser.  
 No CDATA and no ampersands yet.
                                       
                                       
