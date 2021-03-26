@@ -7,7 +7,7 @@ pluginManagement {
         }
     }
 }
-rootProject.name = 'klog'
+rootProject.name = 'kxml'
 
 
 enableFeaturePreview('GRADLE_METADATA')
