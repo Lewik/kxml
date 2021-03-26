@@ -4,7 +4,8 @@ This project **is not abandonned**.
 
 [![](https://jitpack.io/v/lewik/kxml.svg)](https://jitpack.io/#lewik/kxml)
 
-Kxml is simple xml parser
+Kxml is simple xml parser.
+No CDATA and no ampersands yet.
                                       
                                       
 ## Download
@@ -19,9 +20,7 @@ Use https://jitpack.io repository
 ```
 Use these dependencies per kotlin module respectively:
 ```
-compile 'com.github.lewik.kxml:kxml-metadata:0.0.1' //for common modules
-compile 'com.github.lewik.kxml:kxml-js:0.0.1'  //for js modules
-compile 'com.github.lewik.kxml:kxml-jvm:0.0.1'  //for jvm modules
+api("com.github.lewik.kxml:kxml:0.0.4")
 ```
 
 ## Usage                                              
