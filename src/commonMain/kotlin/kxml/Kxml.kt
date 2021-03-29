@@ -13,7 +13,7 @@ class Kxml {
     ) {
         fun getInnerText() = content.mapNotNull { it.second }.joinToString("")
     }
-    
+
     data class Tag(
         val name: String,
         val namespace: String?,
@@ -108,10 +108,10 @@ class Kxml {
             var mode = NONE
             var tagType = NOT_SPECIFIED
 
-            var tagName = ""
-            var tagNamespace = ""
-            var attributeName = ""
-            var attributeNamespace = ""
+            var tagFirstPart = ""
+            var tagSecondPart = ""
+            var attributeFirstPart = ""
+            var attributeSecondPart = ""
             var attributeValue = ""
 
             var readyAttributes = mutableListOf<Tag.Attribute>()
@@ -166,18 +166,18 @@ class Kxml {
 
                                 yield(null to Tag(
                                     type = tagType,
-                                    name = tagName,
-                                    namespace = if (tagNamespace != "") tagNamespace else null,
+                                    name = if (tagSecondPart == "") tagFirstPart else tagSecondPart,
+                                    namespace = if (tagSecondPart == "") null else tagFirstPart,
                                     attrs = readyAttributes
                                 ))
 
                                 mode = NONE
                                 tagType = NOT_SPECIFIED
 
-                                tagName = ""
-                                tagNamespace = ""
-                                attributeName = ""
-                                attributeNamespace = ""
+                                tagFirstPart = ""
+                                tagSecondPart = ""
+                                attributeFirstPart = ""
+                                attributeSecondPart = ""
                                 attributeValue = ""
 
 
@@ -187,12 +187,12 @@ class Kxml {
                             ATTR_NAMESPACE,
                             -> {
                                 readyAttributes.add(Tag.Attribute(
-                                    name = attributeName,
-                                    namespace = if (attributeNamespace != "") attributeNamespace else null,
+                                    name = if (attributeSecondPart == "") attributeFirstPart else attributeSecondPart,
+                                    namespace = if (attributeSecondPart == "") null else attributeFirstPart,
                                     value = attributeValue.trim('"')
                                 ))
-                                attributeName = ""
-                                attributeNamespace = ""
+                                attributeFirstPart = ""
+                                attributeSecondPart = ""
                                 attributeValue = ""
                                 mode = TAG
                             }
@@ -251,12 +251,12 @@ class Kxml {
                             ATTR_NAMESPACE,
                             -> {
                                 readyAttributes.add(Tag.Attribute(
-                                    name = attributeName,
-                                    namespace = if (attributeNamespace != "") attributeNamespace else null,
+                                    name = if (attributeSecondPart == "") attributeFirstPart else attributeSecondPart,
+                                    namespace = if (attributeSecondPart == "") null else attributeFirstPart,
                                     value = attributeValue.trim('"')
                                 ))
-                                attributeName = ""
-                                attributeNamespace = ""
+                                attributeFirstPart = ""
+                                attributeSecondPart = ""
                                 attributeValue = ""
                                 mode = TAG
                             }
@@ -292,12 +292,12 @@ class Kxml {
                             ATTR_NAMESPACE -> TODO("mode: $mode, char: $char, at $debugRowNumber:$debugCharNumber")
                             ATTR_VALUE -> {
                                 readyAttributes.add(Tag.Attribute(
-                                    name = attributeName,
-                                    namespace = if (attributeNamespace != "") attributeNamespace else null,
+                                    name = if (attributeSecondPart == "") attributeFirstPart else attributeSecondPart,
+                                    namespace = if (attributeSecondPart == "") null else attributeFirstPart,
                                     value = attributeValue.trim('"')
                                 ))
-                                attributeName = ""
-                                attributeNamespace = ""
+                                attributeFirstPart = ""
+                                attributeSecondPart = ""
                                 attributeValue = ""
                                 mode = TAG
                             }
@@ -350,12 +350,12 @@ class Kxml {
                             ATTR_VALUE,
                             -> {
                                 readyAttributes.add(Tag.Attribute(
-                                    name = attributeName,
-                                    namespace = if (attributeNamespace != "") attributeNamespace else null,
+                                    name = if (attributeSecondPart == "") attributeFirstPart else attributeSecondPart,
+                                    namespace = if (attributeSecondPart == "") null else attributeFirstPart,
                                     value = attributeValue.trim('"')
                                 ))
-                                attributeName = ""
-                                attributeNamespace = ""
+                                attributeFirstPart = ""
+                                attributeSecondPart = ""
                                 attributeValue = ""
                                 mode = TAG
                             }
@@ -395,7 +395,7 @@ class Kxml {
                                 body += char
                             }
                             LEFT_ANGLE_BRACKET_SYMBOL -> {
-                                tagName += char
+                                tagFirstPart += char
                                 if (tagType == NOT_SPECIFIED) {
                                     tagType = START
                                 }
@@ -404,20 +404,20 @@ class Kxml {
                             EQUALS_SYMBOL -> TODO("mode: $mode, char: $char, at $debugRowNumber:$debugCharNumber")
                             SLASH_SYMBOL -> TODO("mode: $mode, char: $char, at $debugRowNumber:$debugCharNumber")
                             TAG_NAME -> {
-                                tagName += char
+                                tagFirstPart += char
                             }
                             TAG_NAMESPACE -> {
-                                tagNamespace += char
+                                tagSecondPart += char
                             }
                             TAG -> {
-                                attributeName += char
+                                attributeFirstPart += char
                                 mode = ATTR_NAME
                             }
                             ATTR_NAME -> {
-                                attributeName += char
+                                attributeFirstPart += char
                             }
                             ATTR_NAMESPACE -> {
-                                attributeNamespace += char
+                                attributeSecondPart += char
                             }
                             ATTR_VALUE -> {
                                 attributeValue += char

@@ -20,7 +20,7 @@ Use https://jitpack.io repository
 ```
 Use these dependencies per kotlin module respectively:
 ```
-api("com.github.lewik.kxml:kxml:0.0.4")
+api("com.github.lewik.kxml:kxml:0.0.5")
 ```
 
 ## Usage                                              
