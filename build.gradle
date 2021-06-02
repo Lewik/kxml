@@ -11,7 +11,7 @@ apply plugin: 'maven-publish'
 
 kotlin {
     jvm()
-    js(IR) {
+    js(LEGACY) {
         useCommonJs()
         browser()
         binaries.executable()
