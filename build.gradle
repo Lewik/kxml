@@ -5,7 +5,7 @@ repositories {
     mavenCentral()
 }
 group 'kxml'
-version '0.0.6'
+version '0.0.6.LEGACY1'
 
 apply plugin: 'maven-publish'
 
