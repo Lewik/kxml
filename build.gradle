@@ -1,17 +1,17 @@
 plugins {
-    id 'kotlin-multiplatform' version '1.5.10'
+    id 'kotlin-multiplatform' version '1.5.30'
 }
 repositories {
     mavenCentral()
 }
 group 'kxml'
-version '0.0.6.LEGACY1'
+version '0.0.6.IR'
 
 apply plugin: 'maven-publish'
 
 kotlin {
     jvm()
-    js(LEGACY) {
+    js(IR) {
         useCommonJs()
         browser()
         binaries.executable()
