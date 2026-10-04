@@ -1,0 +1,4 @@
+jdk:
+  - openjdk21
+install:
+  - ./gradlew --no-daemon --max-workers=2 --console=plain jvmTest jsNodeTest wasmJsNodeTest publishToMavenLocal

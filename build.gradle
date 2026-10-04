@@ -5,8 +5,8 @@ plugins {
 
 repositories { mavenCentral() }
 
-group = 'kxml'
-version = '0.0.7-SNAPSHOT'
+group = 'com.github.Lewik.kxml'
+version = providers.environmentVariable('VERSION').orElse('0.0.7-SNAPSHOT').get()
 
 kotlin {
     jvmToolchain(21)

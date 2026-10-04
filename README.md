@@ -94,3 +94,27 @@ and Wasm. The library has no runtime dependencies beyond Kotlin's standard libra
 The shared parser suite lives in `commonTest`. JVM tests additionally compare
 supported documents against the JDK XML parser. `publishToMavenLocal` can be used
 for local integration; no repository publication is performed by ordinary tests.
+
+## JitPack publication
+
+`jitpack.yml` selects JDK 21, runs the JVM/Node.js/Wasm tests, and publishes all
+library variants to Maven Local for JitPack to collect. It deliberately does not
+run browser tests or link Apple test executables on the Linux build host. The
+Apple variants contain pure Kotlin KLIBs, with no cinterop or CocoaPods dependencies.
+
+Use the multiplatform root module, not JitPack's all-modules aggregate:
+
+```kotlin
+repositories {
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+
+kotlin.sourceSets.commonMain.dependencies {
+    implementation("com.github.Lewik.kxml:kxml:<commit-or-tag>")
+}
+```
+
+Pin an immutable commit or release tag. JitPack supplies `VERSION` to Gradle so
+the root metadata and every platform module use that same version. Without
+`VERSION`, local builds use `0.0.7-SNAPSHOT`.
