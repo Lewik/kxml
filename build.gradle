@@ -1,56 +1,35 @@
 plugins {
-    id 'kotlin-multiplatform' version '1.5.30'
+    id 'org.jetbrains.kotlin.multiplatform' version '2.4.10'
+    id 'maven-publish'
 }
-repositories {
-    mavenCentral()
-}
-group 'kxml'
-version '0.0.6.IR.2'
 
-apply plugin: 'maven-publish'
+repositories { mavenCentral() }
+
+group = 'kxml'
+version = '0.0.7-SNAPSHOT'
 
 kotlin {
-    jvm()
-    js(IR) {
-        useCommonJs()
-        browser()
-        binaries.executable()
+    jvmToolchain(21)
+    jvm {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
     }
-    sourceSets {
-        commonMain {
-            dependencies {
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-test-common'
-                implementation 'org.jetbrains.kotlin:kotlin-test-annotations-common'
-            }
-        }
-        jvmMain {
-            dependencies {
-                implementation "org.slf4j:slf4j-api:1.7.25"
-            }
-        }
-        jvmTest {
-            dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-test'
-                implementation 'org.jetbrains.kotlin:kotlin-test-junit'
-            }
-        }
-        jsMain {
-            dependencies {
-            }
+    js {
+        browser()
+        nodejs()
+    }
+    wasmJs {
+        browser()
+        nodejs()
+    }
+    iosArm64()
+    iosSimulatorArm64()
+    macosArm64()
 
+    sourceSets {
+        commonTest.dependencies {
+            implementation kotlin('test')
         }
-        jsTest {
-            dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-test-js'
-            }
-        }
-//        linuxMain {
-//        }
-//        linuxTest {
-//        }
     }
 }
